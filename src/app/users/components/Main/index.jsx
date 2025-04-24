@@ -4,11 +4,14 @@ import DeleteIcon from '../../../../assets/DeleteIcon'
 import EditIcon from '../../../../assets/EditIcon'
 import { removeUser } from '../../../../redux/reducers/userReducer'
 
-function Main() {
-
+function Main({ setSelectedUser }) {
     const dispatch = useDispatch()
-
     const usersList = useSelector(state => state.users)
+    
+    const handleEditClick = (user) => {
+        setSelectedUser(user);
+    }
+
     return (
         <div className='mt-2.5'>
             {usersList.map(user => (
@@ -18,10 +21,10 @@ function Main() {
                         <p>{user.email}</p>
                     </div>
                     <div className='border-l flex flex-col'>
-                        <div onClick={()=>dispatch(removeUser(user.id))} className='h-full flex items-center justify-center p-1 border-b'>
+                        <div onClick={() => dispatch(removeUser(user.id))} className='h-full flex items-center justify-center p-1 border-b'>
                             <DeleteIcon color="white"/>
                         </div>
-                        <div className='h-full flex items-center justify-center p-1'>
+                        <div onClick={() => handleEditClick(user)} className='h-full flex items-center justify-center p-1'>
                             <EditIcon color="white"/>
                         </div>
                     </div>
